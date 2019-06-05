@@ -58,7 +58,7 @@ class Item extends Component {
         useNativeDriver: true
       }
     ).start(() => {
-      this.props.removeItem(this.props.item.id);//what is this???removes the whole component but it looks like it is just an id.
+      this.props.removeItem(this.props.item.id);//
     });
   }
 
@@ -133,7 +133,7 @@ export default class App extends Component {
   }
 
 
-//THis works
+//
   bbsaveCSV(){
     
   const path = FileSystem.documentDirectory + 'test'
@@ -146,33 +146,29 @@ export default class App extends Component {
     })
   
 }
-//This works - but where is it stored? I couldn't find it anywhere. yikes. Better just take a screen shot.
+//stored? 
 async saveCSV() {
   try {
       let documentDirectory = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory)
-      //let documentDirectory = await FileSystem.writeAsStringAsync(FileSystem.documentDirectory + 'chalklines/test.txt', 'words')
+      
       console.log('document: ', documentDirectory)
     } catch (err) {
       console.error(err)
     }
   }
 
-  //ensureFolderExists().then(() => {
-  //FileSystem.writeAsStringAsync(FileSystem.documentDirectory+ 'chalklines/test.txt', 'words')
-//})
-//}
+
 
   addMore = () => {
     this._getLocationAsync();
-    this.addNewEle = true;//what is ELe??? element??
+    this.addNewEle = true;
     let coords = 'Waiting..';
     if (this.state.errorMessage) {
       coords = this.state.errorMessage;
     } else if (this.state.location) {
       coords = JSON.stringify(this.state.location);
     }
-    const newlyAddedLocation= { id: "id_" + this.index, text: this.index + 1, location:coords};//uses this for adding and subtracting unfortunately/ but maybe text could be location?/ Check by just taking it out.
-
+    const newlyAddedLocation= { id: "id_" + this.index, text: this.index + 1, location:coords};//
     this.setState({
       disabled: true,
       locationArray: [...this.state.locationArray, newlyAddedLocation]
@@ -180,7 +176,7 @@ async saveCSV() {
   }
 
   remove(id) {
-    this.addNewEle = false;//Yikes why false???
+    this.addNewEle = false;//
     const newArray = [...this.state.locationArray];
     newArray.splice(newArray.findIndex(ele => ele.id === id), 1);
 
@@ -206,8 +202,8 @@ async saveCSV() {
             {this.state.locationArray.map(ele => {
               return (
                 <Item
-                  key={ele.id}//Here is that id
-                  item={ele}//where is ele????
+                  key={ele.id}//
+                  item={ele}//
                   removeItem={(id) => this.remove(id)}
                   afterAnimationComplete={this.afterAnimationComplete}
                 />
