@@ -24,6 +24,8 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": "Quick app to record several locations in a row.",
+    "githubUrl": "https://github.com/biggiebangle/geolocator/tree/master/ChalkLinesLocationMap"
   }
 }

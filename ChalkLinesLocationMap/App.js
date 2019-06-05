@@ -8,11 +8,12 @@ import {
   Animated,
   ScrollView,
   Image,
+  Alert,
   Dimensions,
   LayoutAnimation,
   UIManager
 } from 'react-native';
-import { Constants, Location, Permissions } from 'expo';
+import { Constants, Location, Permissions, FileSystem } from 'expo';
 
 const width = Dimensions.get('window').width;
 
@@ -131,6 +132,36 @@ export default class App extends Component {
     this.setState({ disabled: false });
   }
 
+
+//THis works
+  bbsaveCSV(){
+    
+  const path = FileSystem.documentDirectory + 'test'
+    return FileSystem.getInfoAsync(path).then(({exists}) => {
+      if (!exists) {
+        return FileSystem.makeDirectoryAsync(path)
+      } else {
+        return Promise.resolve(true)
+      }
+    })
+  
+}
+//This works - but where is it stored? I couldn't find it anywhere. yikes. Better just take a screen shot.
+async saveCSV() {
+  try {
+      let documentDirectory = await FileSystem.readDirectoryAsync(FileSystem.documentDirectory)
+      //let documentDirectory = await FileSystem.writeAsStringAsync(FileSystem.documentDirectory + 'chalklines/test.txt', 'words')
+      console.log('document: ', documentDirectory)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  //ensureFolderExists().then(() => {
+  //FileSystem.writeAsStringAsync(FileSystem.documentDirectory+ 'chalklines/test.txt', 'words')
+//})
+//}
+
   addMore = () => {
     this._getLocationAsync();
     this.addNewEle = true;//what is ELe??? element??
@@ -187,6 +218,15 @@ export default class App extends Component {
 
         <TouchableOpacity
           activeOpacity={0.8}
+          style={styles.saveBtn}
+          disabled={this.state.disabled}
+          onPress={this.saveCSV}
+        >
+          <Image source = { require('./assets/images/save.png') } style = { styles.btnImage }/>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          activeOpacity={0.8}
           style={styles.btn}
           disabled={this.state.disabled}
           onPress={this.addMore}
@@ -220,6 +260,19 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 12,
     paddingRight: 17
+  },
+
+saveBtn: {
+    position: 'absolute',
+    left: 25,
+    bottom: 25,
+    borderRadius: 30,
+    width: 60,
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    padding: 15
   },
 
   btn: {
